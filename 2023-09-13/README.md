@@ -1,6 +1,6 @@
 # Introdução ao JavaScript para jogos
 * [Slides](https://docs.google.com/presentation/d/1SrzWQs3o1tyM8WA6AInaxpsnGXKWN1kSH1eCgalsun8/edit?usp=sharing)
-* [Código dos slides](slides.md)
+* [Códigos dos slides](slides.md)
 
 ## Jogos feitos em JavaScript:
 * [Flappy Bird Racing](https://github.com/victorwss/flappy-bird-racing)
