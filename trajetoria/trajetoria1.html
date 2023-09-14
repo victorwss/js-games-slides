@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <title>Trajetória</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            "use strict";
+
+            const largura = 1000; // w = Largura em pixels.
+            const altura = 500;   // h = Altura em pixels.
+            const g = -60;        // Gravidade em pixels por segundo em cada segundo.
+
+            const v0 = 250; // Velocidade inicial em pixels por segundo.
+            const px0 = 20; // Pixels a partir da borda esquerda.
+            const py0 = 30; // Pixels a partir da borda inferior.
+            const r = 20;   // Raio da bolinha vermelha.
+
+            const theta0 = 60;                                  // Ângulo de lançamento da bolinha.
+            const anguloEmRadianos = grausParaRadianos(theta0); // Ângulo em radianos.
+            const ax = 0;                                       // Aceleração X da bolinha.
+            const ay = g;                                       // Aceleração Y da bolinha.
+
+            let px = px0;                             // Posição X da bolinha.
+            let py = py0;                             // Posição Y da bolinha.
+            let vx = v0 * Math.cos(anguloEmRadianos); // Velocidade X da bolinha.
+            let vy = v0 * Math.sin(anguloEmRadianos); // Velocidade Y da bolinha.
+
+            let primeiraVez = true; // Para sabermos se é a condição inicial ou não.
+            let ultimoTempoMs = 0;  // Contador de tempo para calcularmos os deltaT's.
+
+            function grausParaRadianos(graus) {
+                return graus * Math.PI / 180;
+            }
+
+            function atualizarBolinha(deltaT) {
+                vx = vx + ax * deltaT;
+                vy = vy + ay * deltaT;
+                px = px + vx * deltaT;
+                py = py + vy * deltaT;
+            }
+
+            function atualizarPosicao(tempoMs) {
+                if (primeiraVez) {
+                    primeiraVez = false;
+                } else {
+                    const deltaT = (tempoMs - ultimoTempoMs) / 1000;
+                    atualizarBolinha(deltaT);
+                }
+                ultimoTempoMs = tempoMs;
+            }
+
+            function limparTela() {
+                const ctx = document.querySelector("canvas").getContext("2d");
+                ctx.fillStyle = "cyan";
+                ctx.fillRect(0, 0, largura, altura);
+            }
+
+            function desenhar() {
+                limparTela();
+                const ctx = document.querySelector("canvas").getContext("2d");
+                ctx.lineWidth = 1;
+                ctx.fillStyle = "red";
+                ctx.strokeStyle = "black";
+                ctx.beginPath();
+                ctx.ellipse(px, altura - py, r, r, 0, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            function preparar() {
+                document.querySelector("button").onclick = iniciar;
+                const canvas = document.querySelector("canvas");
+                canvas.width = largura;
+                canvas.height = altura;
+            }
+
+            function iniciar() {
+                document.querySelector("button").style.display = "none";
+                requestAnimationFrame(animar);
+            }
+
+            function animar(tempoMs) {
+                atualizarPosicao(tempoMs);
+                desenhar();
+                requestAnimationFrame(animar);
+            }
+        </script>
+    </head>
+    <body onload="preparar()">
+        <h1>Trajetória</h1>
+        <div><button type="button">Lançar</button></div>
+        <div><canvas></canvas></div>
+    </body>
+</html>

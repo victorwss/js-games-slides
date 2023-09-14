@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <title>Trajetória</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            "use strict";
+
+            const largura = 1000;   // w = Largura em pixels.
+            const altura = 500;     // h = Altura em pixels.
+            let primeiraVez = true; // Para sabermos se é a condição inicial ou não.
+            let ultimoTempoMs = 0;  // Contador de tempo para calcularmos os deltaT's.
+            const bolinhas = [];    // Lista com as bolinhas, inicialmente vazia.
+
+            function grausParaRadianos(graus) {
+                return graus * Math.PI / 180;
+            }
+
+            function criarBolinha(px0, py0, v0, r, angulo, g, cor) {
+                const theta0 = grausParaRadianos(angulo);
+                return {
+                    raio: r,
+                    cor: cor,
+                    px: px0,
+                    py: py0,
+                    vx: v0 * Math.cos(theta0),
+                    vy: v0 * Math.sin(theta0),
+                    ax: 0,
+                    ay: g
+                };
+            }
+
+            function refletir(posicaoObjeto, posicaoEspelho) {
+                return 2 * posicaoEspelho - posicaoObjeto;
+            }
+
+            function atualizarBolinha(bolinha, deltaT) {
+                bolinha.vx = bolinha.vx + bolinha.ax * deltaT;
+                bolinha.vy = bolinha.vy + bolinha.ay * deltaT;
+                bolinha.px = bolinha.px + bolinha.vx * deltaT;
+                bolinha.py = bolinha.py + bolinha.vy * deltaT;
+
+                if (bolinha.py - bolinha.raio < 0) {
+                    bolinha.py = refletir(bolinha.py, bolinha.raio);
+                    bolinha.vy = -bolinha.vy;
+                }
+                if (bolinha.px - bolinha.raio < 0) {
+                    bolinha.px = refletir(bolinha.px, bolinha.raio);
+                    bolinha.vx = -bolinha.vx;
+                }
+                if (bolinha.px > largura - bolinha.raio) {
+                    bolinha.px = refletir(bolinha.px, largura - bolinha.raio);
+                    bolinha.vx = -bolinha.vx;
+                }
+            }
+
+            function atualizarPosicao(tempoMs) {
+                if (primeiraVez) {
+                    primeiraVez = false;
+                    ultimoTempoMs = tempoMs;
+                } else {
+                    let deltaT = (tempoMs - ultimoTempoMs) / 1000;
+                    while (deltaT >= 1 / 120) {
+                        for (const b of bolinhas) {
+                            atualizarBolinha(b, 1 / 120);
+                        }
+                        ultimoTempoMs = ultimoTempoMs + 1000 / 120;
+                        deltaT = deltaT - 1 / 120;
+                    }
+                }
+            }
+
+            function limparTela() {
+                const ctx = document.querySelector("canvas").getContext("2d");
+                ctx.fillStyle = "cyan";
+                ctx.fillRect(0, 0, largura, altura);
+            }
+
+            function desenharBolinha(ctx, bolinha) {
+                ctx.lineWidth = 1;
+                ctx.fillStyle = bolinha.cor;
+                ctx.strokeStyle = "black";
+                ctx.beginPath();
+                ctx.ellipse(
+                    bolinha.px, altura - bolinha.py,
+                    bolinha.raio, bolinha.raio,
+                    0, 0, 2 * Math.PI
+                );
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            function desenhar() {
+                limparTela();
+                const ctx = document.querySelector("canvas").getContext("2d");
+                for (const b of bolinhas) {
+                    desenharBolinha(ctx, b);
+                }
+            }
+
+            function sortear(de, ate) {
+                return Math.floor(Math.random() * (ate - de + 1)) + de;
+            }
+
+            function sortearElemento(lista) {
+                const posicao = sortear(0, lista.length - 1);
+                return lista[posicao];
+            }
+
+            function corAleatoria() {
+                const cores = [
+                    "red", "lime", "blue",
+                    "yellow", "darkcyan", "magenta",
+                    "white", "black", "gray",
+                    "brown", "green", "purple", "pink", "orange", "darkred"
+                ];
+                const numeroCor = sortear(0, cores.length - 1);
+                return sortearElemento(cores);
+            }
+
+            function criarBolinhaAleatoria() {
+                const px0 = sortear(2 * largura / 5, 3 * largura / 5);
+                const py0 = sortear(0, altura / 2);
+                const v0 = sortear(100, 500);
+                const r = sortear(10, 60);
+                const angulo = sortear(0, 180);
+                const g = sortear(-120, 0);
+                const cor = corAleatoria();
+                return criarBolinha(px0, py0, v0, r, angulo, g, cor);
+            }
+
+            function preparar() {
+                document.querySelector("button").onclick = iniciar;
+                const canvas = document.querySelector("canvas");
+                canvas.width = largura;
+                canvas.height = altura;
+                requestAnimationFrame(animar);
+            }
+
+            function iniciar() {
+                const nova = criarBolinhaAleatoria();
+                bolinhas.push(nova);
+            }
+
+            function animar(tempoMs) {
+                atualizarPosicao(tempoMs);
+                desenhar();
+                requestAnimationFrame(animar);
+            }
+        </script>
+    </head>
+    <body onload="preparar()">
+        <h1>Trajetória</h1>
+        <div>
+            <button type="button">Lançar</button>
+        </div>
+        <div><canvas></canvas></div>
+    </body>
+</html>
