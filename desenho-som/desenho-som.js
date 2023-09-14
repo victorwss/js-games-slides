@@ -1,7 +1,6 @@
 "use strict";
 
 function carregado() {
-
     // Prepara o canvas.
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d");
@@ -32,6 +31,15 @@ function desenharTrollface(figura, ctx) {
 
     // Desenha cortado.
     ctx.drawImage(figura, 90, 50, 200, 70, 380, 30, 100, 35);
+
+    // Escreve alguma coisa.
+    ctx.fillStyle = "black";
+    ctx.strokeStyle = "red";
+    ctx.font = "20px serif";
+    ctx.textAlign = "left";
+    const texto = "Escrevendo...";
+    ctx.fillText(texto, 10, 420);
+    ctx.strokeText(texto, 10, 460);
 }
 
 function clicou(evento) {
