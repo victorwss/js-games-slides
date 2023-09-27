@@ -1,9 +1,9 @@
 # Introdução ao JavaScript para jogos
 * [Slides com animações](https://docs.google.com/presentation/d/1SrzWQs3o1tyM8WA6AInaxpsnGXKWN1kSH1eCgalsun8/edit?usp=sharing)
-* [PDF dos slides](pdf/Introdução à Programação para Jogos - 06 e 13_09_2003.pdf)
-* [PDF dos slides para impressão A4](pdf/Introdução à Programação para Jogos - 06 e 13_09_2003 - 1-por-página.pdf)
-* [PDF dos slides para impressão A4, com 2 slides por página](pdf/Introdução à Programação para Jogos - 06 e 13_09_2003 - 2-por-página.pdf)
-* [PDF dos slides para impressão A4, com 4 slides por página](pdf/Introdução à Programação para Jogos - 06 e 13_09_2003 - 4-por-página.pdf)
+* [PDF dos slides](pdf/Introdução%20à%20Programação%20para%20Jogos%20-%2006%20e%2013_09_2003.pdf)
+* [PDF dos slides para impressão A4](pdf/Introdução%20à%20Programação%20para%20Jogos%20-%2006%20e%2013_09_2003%20-%201-por-página.pdf)
+* [PDF dos slides para impressão A4, com 2 slides por página](pdf/Introdução%20à%20Programação%20para%20Jogos%20-%2006%20e%2013_09_2003%20-%202-por-página.pdf)
+* [PDF dos slides para impressão A4, com 4 slides por página](pdf/Introdução%20à%20Programação%20para%20Jogos%20-%2006%20e%2013_09_2003%20-%204-por-página.pdf)
 * [Códigos dos slides](codigos.md)
 
 ## Jogos feitos em JavaScript:
