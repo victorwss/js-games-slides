@@ -257,7 +257,7 @@ console.log(x);
 
 ## Slides 138 a 164
 
-[Veja o código aqui](trajetoria/trajetoria1.html)
+* [Veja o código aqui.](trajetoria/trajetoria1.html)
 
 ## Slide 167
 
@@ -400,15 +400,15 @@ console.log(casa3.area, casa3["cor"], casa3.naoexiste);
 
 ## Slides 177 a 187
 
-[Veja o código aqui](trajetoria/trajetoria2.html)
+* [Veja o código aqui.](trajetoria/trajetoria2.html)
 
 ## Slides 190 e 191
 
-[Veja o código aqui](trajetoria/trajetoria3.html)
+* [Veja o código aqui.](trajetoria/trajetoria3.html)
 
 ## Slides 193 e 194
 
-[Veja o código aqui](trajetoria/trajetoria4.html)
+* [Veja o código aqui.](trajetoria/trajetoria4.html)
 
 ## Slide 197
 
